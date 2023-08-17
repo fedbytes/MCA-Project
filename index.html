@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+</head>
+
+<body>
+    <button id="login">Login with Google</button>
+    <hr>
+    <img id="img" style="width:200px">
+    <h2 id="name"></h2>
+    <h3 id="email"></h3>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+    const firebaseConfig = {
+        apiKey: "AIzxxxxxx0xxx-xxx61xxxxxx0xxxxxxx_xxUv0",
+        authDomain: "mca-project-xxxxx.firebaseapp.com",
+        projectId: "mca-project-xxxxx",
+        storageBucket: "mca-project-xxxxx.appspot.com",
+        messagingSenderId: "103xxxxxxx12",
+        appId: "1:103xxxxxxx12:web:1728xxxx917056ccc7d"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    
+    $("#login").on("click", function () {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const user = result.user;
+                $('#name').html(user.displayName)
+                $('#email').html(user.email)
+                $('#img').attr('src', user.photoURL)
+            }).catch((error) => {
+                console.log(error);
+            });
+    })
+
+</script>
+
+</html>
